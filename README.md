@@ -1,100 +1,60 @@
-# Backend Developer Coding Test
+# Project Structure & Environment Configuration
 
-Welcome to the coding test for the **Backend Developer role**. This test evaluates your skills in Node.js, Express.js, Express Validator, JWT Authentication, Authorization Middleware, database management, and API design.
+## 1. Project Structure
 
-## Test Instructions
+The project is organized into different challenges, each placed inside a separate folder. Below is an overview of the structure:
 
-1. **Clone the Repository**: Fork this repository and complete the coding challenges below.
-2. **Complete the Challenges**: Implement the tasks as specified.
-3. **Submit the Solution**: Once you have completed the tasks, push your code to your repository and share the link.
+```
+📂 project-root
+├── 📂 challenge-1
+├── ├── 📂 backend
+│   ├── ├── 📂 controllers        # API controllers
+│   ├── ├── 📂 middleware         # Middleware functions
+│   ├── ├── 📂 models             # Database models
+│   ├── ├── 📂 routes             # Express routes
+│   ├── ├── 📂 validators         # Input validation rules
+│   ├── ├── 📄 server.js          # Express server setup
+│   ├── 📄 package.json       # Dependencies and scripts
+│   ├── 📄 README.md          # Documentation for Challenge 1
+│
+├── 📂 challenge-2
+│   └── 📄 README.md          # Documentation for Challenge 2
 
----
-
-## Challenge 1: Build a RESTful API with Node.js, Express, Express Validator, and JWT Authentication
-
-### Objective
-Create a RESTful API using Node.js and Express.js to manage a Product Inventory System with JWT authentication and authorization middleware.
-
-### Requirements
-
-#### Authentication:
-- Use JWT for authentication. Implement a login endpoint (`POST /auth/login`) to generate a JWT token, which will be required to access the protected routes.
-
-#### Authorization:
-- Implement authorization middleware to protect routes that require admin access (e.g., adding, updating, and deleting products).
-- Authorization middleware should check the role from the decoded JWT token and ensure only users with the `admin` role can access these routes.
-
-#### Endpoints:
-- **POST /auth/login**: User login (returns a JWT token).
-- **POST /products**: Add a new product (`name`, `category`, `price`, `quantity`). Only accessible to admin.
-- **GET /products**: List all products with pagination (10 products per page).
-- **GET /products/:id**: Get a single product by its ID.
-- **PUT /products/:id**: Update a product. Only accessible to admin.
-- **DELETE /products/:id**: Delete a product. Only accessible to admin.
-
-#### Input Validation (using Express Validator):
-- Use Express Validator for validation on the POST and PUT endpoints.
-- Ensure the following validations:
-  - `name` is required.
-  - `category` is optional but should be a string.
-  - `price` should be a positive number.
-  - `quantity` should be a non-negative integer.
-
-#### Database:
-- Use MongoDB for storing product data with the following schema:
-
-```json
-{
-  "name": String,
-  "category": String,
-  "price": Number,
-  "quantity": Number,
-  "createdAt": Date,
-  "updatedAt": Date
-}
+└── 📄 README.md              # Main project documentation
 ```
 
-## Features:
-- Implement basic validation for required fields and proper error handling using Express Validator.
-- Ensure security best practices for authentication and authorization.
+## 2. Environment Configuration
 
----
+Each challenge and the main project require a `.env` file to manage sensitive configuration settings. Below is how you can set up your `.env` file:
 
-## Challenge 2: Database Query Optimization
+### **Steps to Set Up .env**
 
-### Objective
-Write optimized SQL/NoSQL queries to retrieve product data efficiently.
+1. **Create a `.env` file** in the root of each challenge folder if it does not exist.
+2. **Add the required environment variables** following the example below.
+3. **Ensure that `.env` is included in `.gitignore`** to prevent sensitive data from being pushed to a repository.
 
-Requirements
-SQL Query: (Assuming PostgreSQL)
+### **Example .env File:**
+```env
+# Server Configuration
+PORT=5000
 
-Write a query to fetch products with a price between $50 and $200, ordered by price (ascending), with pagination (10 products per page).
-NoSQL Query: (Assuming MongoDB)
+# Database Configuration
+MONGO_URI=mongodb+srv://dummy:23A9HbkOjhU6fXQI@cluster0.mzv4i.mongodb.net/?retryWrites=true&w=majority&appName=Netway-Corp 
 
-Write a query to retrieve products by category (e.g., "Electronics"), sorted by price in descending order. Limit the result to 5 products per page.
-Optimization:
+# JWT Configuration
+JWT_SECRET=your_secret_key_here
 
-How would you optimize the queries for high traffic scenarios (e.g., indexing, caching)?
+# Other Configuration
+NODE_ENV=development
+```
 
+### **Accessing Environment Variables in Code**
+In your application, use `process.env` to access environment variables:
+```javascript
+import dotenv from 'dotenv';
+dotenv.config();
 
----
+console.log("Database URI:", process.env.MONGO_URI);
+```
 
-## Submission Instructions
-
-1. **Clone This Repository**: Fork this repository and set up your environment.
-2. **Complete the Tasks**: Implement the tasks in the respective directories for each challenge.
-3. **Test Your Work**: Ensure your APIs, authentication, authorization, and queries work as expected.
-4. **Submit Your Solution**: Push your completed code to your public GitHub repository and share the link with us.
-
-
-## Timeline
-You have **2 days** to complete and submit the coding test.
-
----
-
-## Questions?
-Feel free to reach out if you need clarification.
-
----
-
-Good luck! 🚀
+This setup ensures that each challenge is modular and can be configured independently while following best practices for environment management. 🚀
